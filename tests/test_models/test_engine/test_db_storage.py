@@ -90,3 +90,15 @@ class TestFileStorage(unittest.TestCase):
     """Retrieve one object"""
     key = "{}.{}".format(cls.__name__, id)
     return self.__objects.get(key, None)
+
+    def test_get_count(self):
+        """Test get and count methods"""
+        state = State(name="California")
+        state.save()
+        state_id = state.id
+
+        retrieved_state = models.storage.get(State, state_id)
+        self.assertEqual(retrieved_state, state)
+
+        all_states_count = models.storage.count(State)
+        self.assertEqual(all_states_count, 1)
